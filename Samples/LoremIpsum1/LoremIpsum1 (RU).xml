@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<template id="LoremIpsum" language="en_us">
+	
+<subject>
+Русский!
+</subject>
+	
+<heading>
+Русский,
+</heading>
+
+<greeting>
+Дорогой @Model.User,
+</greeting>
+	
+<body>
+<tr>
+	<td class="brand-whitespace">
+		Эа эжт фырре волуптюа аппэльлььантюр, ыам йн граэки дикунт видырэр. 
+		Нюлльа золэт эквюедым кюм ат, квюо ажжюм долорэм экз, мэя экз ныморэ долорэм. 
+		Эа пэрчёус дытракжйт импэрдеэт шэа, заэпы вэрйтюж про ед, еюж модюж црял ан:
+	</td>
+</tr>
+<tr>
+	<td class="brand-whitespace">
+		<table summary="">
+			<tr>
+				<td>
+					<table summary="">
+						<tr>
+							<td align="center">
+								<a href="@Model.Url"
+										class="brand-font-button" target="_blank"><span 
+											class="brand-button brand-font-button">Русский</span></a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td class="brand-whitespace">
+		Квуй ед нюлльа игнота, хёз хёнк пэркйпет ажжынтиор ан, 
+		ыт пэржыкюти азжюывырит контынтёонэж ыюм. 
+		Нэ алььтэрюм конвынёры дэлььякатезшимя кюм, ыт вэл омныз рыпримёквуы.
+	</td>
+</tr>
+</body>
+
+</template>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<template id="LoremIpsum" language="ar">
+	
+<subject>
+العربية !
+</subject>
+	
+<heading>
+العربية ،
+</heading>
+
+<greeting>
+عزيزي @Model.User
+</greeting>
+	
+<body>
+<tr>
+	<td class="brand-whitespace">
+تم دار أهّل والديون, شدّت بولندا، وتم و. عن وبعض قِ
+بل مليارات وصل. أي مكن بقيادة الخاصّة الباهضة. وم	
+ن ما هنا؟ الإطلاق, عليها الثالث الصع
+داء يكن تم, إعادة وكسبت تزامناً في يتم.
+	</td>
+</tr>
+<tr>
+	<td class="brand-whitespace">
+		<table summary="">
+			<tr>
+				<td>
+					<table summary="">
+						<tr>
+							<td align="center">
+								<a href="@Model.Url"
+										class="brand-font-button" target="_blank"><span 
+											class="brand-button brand-font-button">العربية</span></a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td class="brand-whitespace">
+		جنوب للأراضي جهة أن, عليها الشرق، وبالتحديد، نفس قد, لكل 
+إذ إحتار بأيدي. ثم فكان المارق شواطيء الى, بين 
+ضمنها أصقاع بـ. ٣٠ لها وترك يعبأ فمرّ, حيث تم بقسوة قُدُما
+	</td>
+</tr>
+</body>
+
+</template>

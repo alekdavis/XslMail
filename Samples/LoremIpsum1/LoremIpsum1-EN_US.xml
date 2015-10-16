@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<template id="LoremIpsum" language="en_us">
+	
+<subject>
+US-English!
+</subject>
+	
+<heading>
+US-English,
+</heading>
+
+<greeting>
+Dear @Model.User,
+</greeting>
+	
+<body>
+<tr>
+	<td class="brand-whitespace">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+		Phasellus venenatis risus leo, quis iaculis sem interdum eu. 
+		Duis maximus elit tellus. In tincidunt in arcu vitae sodales:
+	</td>
+</tr>
+<tr>
+	<td class="brand-whitespace">
+		<table summary="">
+			<tr>
+				<td>
+					<table summary="">
+						<tr>
+							<td align="center">
+								<a href="@Model.Url"
+										class="brand-font-button" target="_blank"><span 
+											class="brand-button brand-font-button">US-English</span></a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td class="brand-whitespace">
+		Ut erat dui, varius ut elementum non, auctor quis turpis. Nam vel consequat nisi. 
+		Phasellus euismod volutpat urna, eget semper dolor porta a. 
+		Vivamus congue, nisi at cursus bibendum, massa lorem pulvinar quam, 
+		at maximus neque lacus sed metus.
+	</td>
+</tr>
+</body>
+
+</template>

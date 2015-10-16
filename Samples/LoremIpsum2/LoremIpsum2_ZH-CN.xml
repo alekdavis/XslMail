@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<template id="LoremIpsum" language="en_us">
+	
+<subject>
+简体中文!
+</subject>
+	
+<heading>
+简体中文,
+</heading>
+
+<greeting>
+亲爱的 @Model.User,
+</greeting>
+	
+<body>
+<tr>
+	<td class="brand-whitespace">
+		棦殔湝 嶝仉圠 賌輈鄍 甀 撱暲, 鍖鍹 綧緁緅 袀豇貣 檹瀔濼 墆 幎愶 裺觨誖 礯籔羻 蛣袹跜 
+		筩 譖貚趪 箛箙舕 蔪蓩蔮 墡嬇 溾, 虰豖阹 潿熥獘 翍脝艴 蒢蒰 筡 鶀嚵巆 檹瀔濼 
+		蒢蒰 緅 箄縴 煔 鏀顝饇 輐銛靾:
+	</td>
+</tr>
+<tr>
+	<td class="brand-whitespace">
+		<table summary="">
+			<tr>
+				<td>
+					<table summary="">
+						<tr>
+							<td align="center">
+								<a href="@Model.Url"
+										class="brand-font-button" target="_blank"><span 
+											class="brand-button brand-font-button">简体中文</span></a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td class="brand-whitespace">
+		郺鋋錋 鼀齕櫌 儇 燚璒, 巠帎 噮噦噞 瀤瀪璷 脬舑莕 跾, 磑 灂瀿 磏磑禠 鏀顝饇 
+		曋橪 踆 愄揎揇 贄蹝轈 緳廞徲 濷瓂癚 灡蠵讔 犚獛 輘, 葍萯 彃 梴棆棎 谾踘遳
+	</td>
+</tr>
+</body>
+
+</template>
