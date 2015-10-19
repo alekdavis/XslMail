@@ -6,13 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("XslMail")]
-[assembly: AssemblyDescription("Generates localized HTML email template files " +
-	"from the master (XSLT) and custom template (XML) files.")]
+[assembly: AssemblyDescription("Generates localized HTML email template files from the master (XSLT) and custom template (XML) files.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Alek Davis")]
+[assembly: AssemblyCompany("https://github.com/alekdavis/XslMail")]
 [assembly: AssemblyProduct("XslMail")]
 [assembly: AssemblyCopyright("(C) Alek Davis 2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Icon by Oxygen Team")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

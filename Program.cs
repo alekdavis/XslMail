@@ -73,6 +73,9 @@ namespace XslMail
 					Console.WriteLine(parser.UsageInfo.ToString(
 						Console.WindowWidth, false));
 
+					Console.WriteLine("For additional information, see:");
+					Console.WriteLine("https://github.com/alekdavis/XslMail");
+
 					return 0;
 				}
 
