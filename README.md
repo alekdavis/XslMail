@@ -54,9 +54,9 @@ For additional information about master and template files, see [Samples](#sampl
 
 ## Samples
 
-Download samples from:
+You can view [samples online](../../tree/Master/Samples) or download them from:
 
-TBD
+- [XslMail Latest Release Downloads](../../releases)
 
 ## How does XslMail work?
 
@@ -69,7 +69,6 @@ Then XslMail converts CSS styles to inline, clean up HTMl via HTML Tidy, and sav
 ## Application settings
 
 By default, XslMail assumes the following:
-
 
 - Master files start with "Master", have extension ".xslt" and reside in the working directory.
 - Template files reside in the "Input" subfolder under the working directory and have ".xml" extension.
@@ -107,7 +106,11 @@ XslMail distribution includes the following components:
 - XslMail.exe
 - libtidy.dll
 
-Libtidy.dll must be located in the working folder.
+You can download the application binaries from:
+
+- [XslMail Latest Release Downloads](../../releases)
+
+Keep in mind that during run time ```libtidy.dll``` must be located in the application directory.
 
 ## Limitations
 
