@@ -1,26 +1,26 @@
 # What is XslMail?
-XslMail is a Windows console application (XslMail.exe) that can help application developers localize HTML email templates.
+XslMail is a Windows console application (```XslMail.exe```) that can help application developers localize HTML email templates (the rest of the document will refer to *HTML email* templates as *email* templates or *HTML* templates).
 
 ## Why use XslMail? 
-To support localization of HTML email templates, a developer must address the following questions:
+When building localized email templates, a developer must address the following questions:
 
 - How to implement common look and feel across various templates without code duplication?
 - How to define language- or country-specific elements (images, links, styles)?
 - How to support both left-to-right and right-to-left text directions?
-- How to make email templates look nice across various platforms and clients?
+- How to make email templates look nice across various platforms and clients (Gmail, Outlook, Yahoo!, iPhone, Android, etc)?
 - How to test email templates with minimal effort?
 - How to pass data to templates at run time and perform transformations?
 - How to make the application find appropriate localized version of a template at run-time?
 
-While there are existing solutions -- such as [Mailr.NET](https://github.com/alekdavis/Mailr) -- for application-specific aspects (like loading proper localized versions, performing data transformations, testing email), the design phase (i.e. the process of building the templates), involves mostly manual steps. XslMail can automate some of them.
+While there are existing solutions -- such as [Mailr.NET](https://github.com/alekdavis/Mailr) -- for application-specific aspects (like loading proper localized versions, performing data transformations, testing email), the design phase (i.e. the process of building the templates), mostly involves manual steps. XslMail can automate some of them.
 
-## What is the workflow that XslMail support?
+## How do you build email templates using XslMail?
 
-Here are the recommended steps for building localized HTML email templates using XslMail:
+Here is a brief outline of the workflow that you can use to design, build and localize email templates using XslMail:
 
 1. Define common CSS styles and elements.
 2. Define language-specific CSS styles and elements (such as default text alignment for left-to-right and right-to-left languages).
-3. Build two master files: one for left-to-right, another for right-to-left languages.
+3. Build master files for each unique language-specific layout. Some languages may reuse the existing layout, while other may not (for example, language versions supporting the right-to-left text direction may not look nice when applied to a left-to-right layout).
 4. Build the custom template files for each supported email notification in the base language (such as English).
 5. Send the master and template files to the translators.
 6. Build the directory structure holding the localized master and template files.
@@ -28,13 +28,13 @@ Here are the recommended steps for building localized HTML email templates using
 
 ## What does XslMail do?
 
-XslMail performs several operations. First, it meges localized template files with the corresponding master files and common files to generate the source HTML files. You can test these HTML files in the browsers, but you cannot use them as email templates, because they need additional processing. At next transformation, XslMail converts all CSS definitions to inline styles so that they can be recognized by email client applications. Finally, it validates and cleans up the templates producing the files that an application can use as is. 
+XslMail performs several operations. First, it merges localized template files with the corresponding master files and common files to generate the original version of the HTML template files. You can test these templates directly in the browsers, but you should not  use them in an application because the external CSS styles defined in the HTML code will not be recognized by many email clients (such as Gmail). You can use an online tool (such as [CSS Inliner](http://inliner.cm/)), to convert external styles to inline CSS, but XslMail will do it for you automatically. In addition, it will remove the unneeded external styles and class definitions, clean up and validate the HTML code resulting in the template files that your application can use without further adjustments.
 
 ## How does XslMail do it?
 
-XslMail gets a list of subfolders from the specified input directory. The program assumes that the subfolders correspond to email templates (it can ignore certain subfolders). It iterates through each input subfolder and processes every file with the name matching the name of the parent folder and the expected extension. It retrieves the language suffix by stripping off the extension and the common name from the file name and appends this suffix to the name of the master file to identified the proper mster file localization. It then merges the template file with the master file to produce and HTML document.
+XslMail gets a list of subfolders from the specified input directory (skipping the ones that must be ignored). The program assumes that each subfolder holds localized versions of a specific email template. It iterates through every file found in the subfolder that matches a specific pattern (the file name must start with the name of the subfolder and end with the specified extension) and retrieves the language suffix from the file name (by stripping off the name of the folder at the beginning and extension at the end of the file name). XslMail then merges a master file with the same language suffix with the template file to produce a localized HTML template.
 
-Then XslMail converts CSS styles to inline with the help of [PreMailer.NET](https://github.com/milkshakesoftware/PreMailer.Net), clean up HTML via [HTML Tidy](http://tidy.sourceforge.net/), and saves the result in the specified output folder (the structure of the output folder will resemble the structure of the input folder, except that the output files can have a different extension). The CSS inline and HTML cleanup steps are optional and can be skipped. The resulting output files can be used as HTML email templates.
+Then XslMail calls [PreMailer.NET](https://github.com/milkshakesoftware/PreMailer.Net) to convert external styles to inline CSS and cleans up HTML code with the help of [HTML Tidy](http://tidy.sourceforge.net/). It saves the result in the specified output folder (the structure of the output folder will resemble the structure of the input folder, except that the output files may have a different extension). The resulting output files can now be used as localized email templates.
 
 ## Which does a developer need to know to use XslMail?
 To build HTML email templates for XslMail, a developer must be familiar with the following languages and technologies:
@@ -69,7 +69,7 @@ Master\
 - Master (RU).xslt
 - Master_ZH-TW.xslt
 ```
-All master files must reside in the same folder. 
+All master files must reside in the same folder. The location of the master file folder can be customized. 
 
 ### Template files
 
@@ -88,6 +88,8 @@ WeeklyPromo\
 - WeeklyPromo (RU).xml
 - WeeklyPromo_ZH-CN.xml
 ```
+
+## Samples
 You can view [samples online](../../tree/master/Samples) or download them from:
 
 - [XslMail Latest Release Downloads](../../releases)
@@ -96,34 +98,37 @@ You can view [samples online](../../tree/master/Samples) or download them from:
 
 By default, XslMail assumes the following:
 
-- Master files start with "Master", have extension ".xslt" and reside in the working directory.
-- Template files reside in the "Input" subfolder under the working directory and have ".xml" extension.
-- Output files will  go to the "Output" folder under the working directory.
+- Master files start with *Master*, have the *.xslt* extension.
+- Mater files reside in the working directory.
+- Template files reside in the *Input* subfolder under the working directory and have the *.xml* extension.
+- Output files will be saved in the *Output* folder under the working directory.
 - Intermediate files will not be saved.
-- HTML files will be inlined and tidyfied.
+- HTML files will be inlined, cleaned up, and verified.
 
 There are other less essential default that you can check by launching XslMail with the ```/?``` command-line switch. 
 
-You can override the default settings using command-line or the configuration (```.config```) file (if XslMail runs with at least one command-line switch it will ignore the configuration file; otherwise, it will use it, if the file is present).
+You can override the default settings using the command-line switches or an application configuration (```.config```) file (if XslMail runs with at least one command-line switch it will ignore the configuration file; otherwise, it will use it, if the file is present).
 
 ## Command line
 
 Here are some examples of command-line switches:
 
   ```XslMail /i:"..\Templates" /o:"C:\Result" /l:Log.txt /stopOnError```
+
   ```XslMail /masterFileName:Base /masterFileExtension:xsl /keepComments```
+
   ```XslMail /saveTempFiles /TempFolder:Temp /q /nowarn```
 
-To see a list and description of all command-line options, run the XslMail with the ```/?``` switch.
+To see the list and description of all command-line options, run XslMail with the ```/?``` switch.
 
 ## Dependencies
 
 XslMail depends on the following packages:
 
 - [PreMailer.NET](https://www.nuget.org/packages/PreMailer.Net) (performs CSS inlining; see [project site](https://github.com/milkshakesoftware/PreMailer.Net))
-- [TidyManaged](https://www.nuget.org/packages/TidyManaged/) (fixes issues caused by PreMailer.NET and reformats HTML; see [project site](https://github.com/markbeaton/TidyManaged))
+- [TidyManaged](https://www.nuget.org/packages/TidyManaged/) (fixes issues caused by PreMailer.NET and cleans up HTML; see [project site](https://github.com/markbeaton/TidyManaged))
 
-All other third-party .NET dependencies are merged into the application assembly.
+All third-party .NET dependencies are merged into the application assembly.
 
 ## Distribution files
 
