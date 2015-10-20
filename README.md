@@ -54,7 +54,7 @@ For additional information about master and template files, see [Samples](#sampl
 
 ## Samples
 
-You can view [samples online](../../tree/Master/Samples) or download them from:
+You can view [samples online](../../tree/master/Samples) or download them from:
 
 - [XslMail Latest Release Downloads](../../releases)
 
