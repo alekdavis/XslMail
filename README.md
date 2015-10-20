@@ -152,3 +152,7 @@ Output files will be encoded in UTF-8.
 ## Project site
 
 https://github.com/alekdavis/XslMail
+
+## See also
+
+[Mailr.NET](https://github.com/alekdavis/Mailr)
