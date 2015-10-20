@@ -1,5 +1,5 @@
 # What is XslMail?
-XslMail is a Windows command-line tool implemented as a 32-bit console application (XslMail.exe). XslMail is intended to help application developers and translators simplify the HTML email template design, localization and preparation process.
+XslMail is a Windows command-line tool implemented as a 32-bit console application (XslMail.exe). XslMail is intended to help application developers and translators simplify the HTML email template design, localization and preparation workflow.
 
 ## Why use XslMail? 
 
