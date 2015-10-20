@@ -102,13 +102,11 @@
     </None>
     <None Include="ILMerge.props" />
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
     <Content Include="ILMergeOrder.txt" />
-    <None Include="README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="Samples\LoremIpsum2\LoremIpsum2-AR.xml" />
     <Content Include="Samples\LoremIpsum2\LoremIpsum2-EN_US.xml" />
     <Content Include="Samples\LoremIpsum2\LoremIpsum2 %28RU%29.xml" />
