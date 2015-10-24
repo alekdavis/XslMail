@@ -92,6 +92,33 @@ namespace XslMail
 		public string InputFolder { get; set; }
 
 		[CommandLineOption(
+			Name="keepComments", 
+			Description="Keeps comment elements. " +
+				"By default, comments will be stripped.",
+			MinOccurs=0,
+			MaxOccurs=1, 
+			GroupId="options")]
+		public bool KeepComments { get; set; }
+
+		[CommandLineOption(
+			Name="keepIdAndClassAttributes", 
+			Description="Keeps ID and class attributes after the CSS inlining step. " +
+				"By default, ID and class attributes will be stripped.",
+			MinOccurs=0,
+			MaxOccurs=1, 
+			GroupId="options")]
+		public bool KeepIdAndClassAttributes { get; set; }
+
+		[CommandLineOption(
+			Name="keepStyleElements", 
+			Description="Keeps the external style elements. " +
+				"By default, the external style elements will be stripped.",
+			MinOccurs=0,
+			MaxOccurs=1, 
+			GroupId="options")]
+		public bool KeepStyleElements { get; set; }
+
+		[CommandLineOption(
 			Name="l", 
 			Aliases="log,logFile", 
 			Description="Path to the optional log file. " +
@@ -205,7 +232,7 @@ namespace XslMail
 
 		[CommandLineOption(
 			Name="saveTempFiles",
-			Description="Save intermediate files for each step of the workflow. " +
+			Description="Saves intermediate files for each step of the workflow. " +
 				"By default, the intermediate step files will not be saved.",
 			MinOccurs=0,
 			MaxOccurs=1, 
@@ -260,27 +287,30 @@ namespace XslMail
 		/// </summary>
 		public Options()
 		{
-			EchoSettings		= false;
-			ErrorFile			= null;
-			IgnoreFolderPattern = "\\W|^_|^common$|^include$|^master$|^shared$'";
-			IgnoreStyleSelector	= "#IgnoreInline";
-			InputFolder			= @"Input";
-			LogFile				= null;
-			MasterFileExtension	= ".xslt";
-			MasterFileName		= "Master";
-			MasterFolder		= "";
-			NoInlineCss			= false;
-			NoOutput			= false;
-			NoTidy				= false;
-			NoWarnings			= false;
-			OutputFileExtension	= ".html";
-			OutputFolder		= @"Output";
-			Quiet				= false;
-			SaveTempFiles		= false;
-			StopOnError			= true;
-			TempFolder			= "Temp";
-			TemplateFileExtension= ".xml";
-			Verbose				= false;
+			EchoSettings			= false;
+			ErrorFile				= null;
+			IgnoreFolderPattern		= "\\W|^_|^common$|^include$|^master$|^shared$'";
+			IgnoreStyleSelector		= "#IgnoreInline";
+			InputFolder				= @"Input";
+			KeepComments			= false;
+			KeepIdAndClassAttributes= false;
+			KeepStyleElements		= false;
+			LogFile					= null;
+			MasterFileExtension		= ".xslt";
+			MasterFileName			= "Master";
+			MasterFolder			= "";
+			NoInlineCss				= false;
+			NoOutput				= false;
+			NoTidy					= false;
+			NoWarnings				= false;
+			OutputFileExtension		= ".html";
+			OutputFolder			= @"Output";
+			Quiet					= false;
+			SaveTempFiles			= false;
+			StopOnError				= true;
+			TempFolder				= "Temp";
+			TemplateFileExtension	= ".xml";
+			Verbose					= false;
 		}
 
 		/// <summary>
@@ -336,7 +366,7 @@ namespace XslMail
 			{
 				string value = appSettings[key];
 				
-				if (key.Equals("echoSettings", 
+				if (key.Equals("EchoSettings", 
 					StringComparison.InvariantCultureIgnoreCase))
 				{
 					EchoSettings = bool.Parse(value.ToLower());				
@@ -361,6 +391,21 @@ namespace XslMail
 				{
 					InputFolder = value;				
 				}
+				else if (key.Equals("KeepComments", 
+					StringComparison.InvariantCultureIgnoreCase))
+				{
+					KeepComments = bool.Parse(value.ToLower());				
+				}
+				else if (key.Equals("KeepStyleElelments", 
+					StringComparison.InvariantCultureIgnoreCase))
+				{
+					KeepStyleElements = bool.Parse(value.ToLower());				
+				}
+				else if (key.Equals("KeepIdAndClassAttributes", 
+					StringComparison.InvariantCultureIgnoreCase))
+				{
+					KeepIdAndClassAttributes = bool.Parse(value.ToLower());				
+				}
 				else if (key.Equals("LogFile", 
 					StringComparison.InvariantCultureIgnoreCase))
 				{
@@ -381,7 +426,7 @@ namespace XslMail
 				{
 					MasterFolder = value;				
 				}
-				else if (key.Equals("noInlineCss", 
+				else if (key.Equals("NoInlineCss", 
 					StringComparison.InvariantCultureIgnoreCase))
 				{
 					NoInlineCss = bool.Parse(value.ToLower());				

@@ -487,10 +487,10 @@ namespace XslMail
 		{
 			var result = PreMailer.Net.PreMailer.MoveCssInline(
 				html,
-				ignoreElements:	_options.IgnoreStyleSelector,
-				stripIdAndClassAttributes: true,
-				removeStyleElements:true, 
-				removeComments:	true);
+				ignoreElements:				_options.IgnoreStyleSelector,
+				stripIdAndClassAttributes:	!_options.KeepIdAndClassAttributes,
+				removeStyleElements:		!_options.KeepStyleElements, 
+				removeComments:				!_options.KeepComments);
 
 			if (!_options.NoWarnings)
 			{
