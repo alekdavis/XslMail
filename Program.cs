@@ -591,6 +591,21 @@ namespace XslMail
 					// that Tidy did not fix.
 					doc.ForceOutput = true;
 
+					// Do not add new lines before closing tags.
+					doc.AddVerticalSpace = false;
+
+					// Turn off indentation (it causes unexpected line breaks).
+					doc.IndentAttributes	= false;
+					doc.IndentBlockElements = AutoBool.No;
+					doc.IndentCdata			= false;
+
+					// Do not wrap text.
+					doc.WrapAt				= 0;
+					doc.WrapAttributeValues = false;
+					doc.WrapScriptLiterals	= false;
+					doc.WrapSections		= false;
+					doc.PunctuationWrap		= false;
+
 					// Okay, prettify it.
 					doc.CleanAndRepair();
 
