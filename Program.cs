@@ -441,6 +441,7 @@ namespace XslMail
 	
 			// Localized notification template file.
 			XmlDocument xmlDoc = new XmlDocument();
+			xmlDoc.PreserveWhitespace = true;
 			xmlDoc.Load(templateFilePath);
 
 			// Use memory stream to generate the UTF-8 encoding 
@@ -450,7 +451,7 @@ namespace XslMail
 			{
 				// Merge XSL (master) document with XML (template) 
 				// document.
-				xslDoc.Transform(xmlDoc, null, stream);
+				xslDoc.Transform(new XmlNodeReader(xmlDoc), null, stream);
 
 				// Move cursor to the beginning.
 				stream.Seek(0, SeekOrigin.Begin);
