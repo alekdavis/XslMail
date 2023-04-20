@@ -4,19 +4,19 @@ XslMail is a Windows console application (```XslMail.exe```) that can help appli
 ## Why use XslMail? 
 When building localized email templates, a developer must address the following questions:
 
-- How to implement common look and feel across various templates without code duplication?
+- How to implement the common look and feel across various templates without code duplication?
 - How to define language- or country-specific elements (images, links, styles)?
 - How to support both left-to-right and right-to-left text directions?
 - How to make email templates look nice across various platforms and clients (Gmail, Outlook, Yahoo!, iPhone, Android, etc)?
 - How to test email templates with minimal effort?
-- How to pass data to templates at run time and perform transformations?
+- How to pass data to templates at runtime and perform layout transformations?
 - How to make the application find appropriate localized version of a template at run-time?
 
 While there are existing solutions -- such as [Mailr.NET](https://github.com/alekdavis/Mailr) -- for application-specific aspects (like loading proper localized versions, performing data transformations, testing email), the design phase (i.e. the process of building the templates), mostly involves manual steps. XslMail can automate some of them.
 
 ## How do you build email templates using XslMail?
 
-Here is a brief outline of the workflow that you can use to design, build and localize email templates using XslMail:
+Here is a brief outline of the workflow that you can use to design, build, and localize email templates using XslMail:
 
 1. Define common CSS styles and elements.
 2. Define language-specific CSS styles and elements (such as default text alignment for left-to-right and right-to-left languages).
@@ -24,11 +24,27 @@ Here is a brief outline of the workflow that you can use to design, build and lo
 4. Build the custom template files for each supported email notification in the base language (such as English).
 5. Send the master and template files to the translators.
 6. Build the directory structure holding the localized master and template files.
-7. Run ```XslMail.exe``` to generate final HTML template files from the localized master and template files.
+7. Run `XslMail.exe` to generate the final HTML template files from the localized master and template files.
 
 ## What does XslMail do?
 
-XslMail performs several operations. First, it merges localized template files with the corresponding master files and common files to generate the original version of the HTML template files. You can test these templates directly in the browsers, but you should not  use them in an application because the external CSS styles defined in the HTML code will not be recognized by many email clients (such as Gmail). You can use an online tool (such as [CSS Inliner](http://inliner.cm/)), to convert external styles to inline CSS, but XslMail will do it for you automatically. In addition, it will remove the unneeded external styles and class definitions, clean up and validate the HTML code resulting in the template files that your application can use without further adjustments.
+XslMail performs several tasks. 
+
+### Task 1: Merge XSLT and XML files into HTML template
+
+To generate the original version of the HTML template files, XslMail merges the localized template files with the corresponding master and common files. You can test these templates directly in the browsers, but you should not use them in an application because the external CSS styles defined in the HTML code will not be recognized by many email clients (e.g. Gmail), so all CSS styles must be inlined. 
+
+### Task 2: Convert external CSS definitions to inline styles
+
+To convert external styles to inline CSS, you can use an online tool (such as [CSS Inliner](http://inliner.cm/)), but XslMail will do it for you automatically with the help of [PreMailer.NET](https://github.com/milkshakesoftware/PreMailer.Net). Unfortunately, PreMailer.NET has a couple of issues: (a) it produces a mess of HTML that needs to be cleaned up and (b) it converts HTML entities (such as `&copy;`) to the corresponding characters, which may cause problems for some email clients (for example, when Gmail sees the copyright character, it displays the message saying that the message was trimmed even though it was not). XslMail addresses these issues in the next steps.
+
+### Task 3: Clean up HTML text
+
+To remove the unneeded external styles and class definitions, clean up and validate the HTML code resulting in the template files that your application can use, XslMail uses the [TidyHtml5ManagedRepack](https://www.nuget.org/packages/TidyHtml5ManagedRepack) package. This step is optional and you can skip it by setting the `NoTidy` application option to `true`.
+
+### Task 4: Replace special characters
+
+To fix the issue of the copyright (and other special) characters, you can define the string substitutions via the `Substitutions` application setting that takes the format: `ValueToBeReplaced1=ReplacementValue1|ValueToBeReplaced2=ReplacementValue2|ValueToBeReplaced3=ReplacementValue3`. You can define your own substitutions, but by default, it will use the following: `©=&copy;|®=&reg;|™=&trade;`. To skip this step, set the `Substitutions` setting to an empty string.
 
 ## How does XslMail do it?
 
@@ -49,7 +65,7 @@ To build HTML email templates for XslMail, a developer must be familiar with the
 
 XslMail runtime requirements include:
 
-- .NetFramework 4.5
+- .NetFramework 4.8
 
 ## What does XslMail expect?
 
@@ -125,27 +141,31 @@ To see the list and description of all command-line options, run XslMail with th
 
 XslMail depends on the following packages:
 
-- [PreMailer.NET](https://www.nuget.org/packages/PreMailer.Net) (performs CSS inlining; see [project site](https://github.com/milkshakesoftware/PreMailer.Net))
-- [TidyManaged](https://www.nuget.org/packages/TidyManaged/) (fixes issues caused by PreMailer.NET and cleans up HTML; see [project site](https://github.com/markbeaton/TidyManaged))
+- [PreMailer.NET](https://www.nuget.org/packages/PreMailer.Net): Performs CSS inlining.
+- [TidyHtml5ManagedRepack](https://www.nuget.org/packages/TidyHtml5ManagedRepack): Fixes cleans up HTML.
 
 All third-party .NET dependencies are merged into the application assembly.
 
 ## Distribution files
 
-XslMail distribution includes the following components:
+After release 1.2.0.0, the compiled application file is no longer merged with dependent assemblies automatically,
+but you can do it by running the ```ilmerge.bat``` file located in the solution directory which will perform the merge
+and copy all distribution files to the folder ```Tools\Merged``` folder.
+
+XslMail distribution includes the following files:
 
 - XslMail.exe
-- libtidy.dll
+- XslMail.exe.config
+- tidy.x64.dll
+- tidy.x86.dll
 
 You can download the application binaries from:
 
 - [XslMail Latest Release Downloads](../../releases)
 
-Keep in mind that during run time ```libtidy.dll``` must be located in the application directory.
+Keep in mind that during run time ```tidy.x64.dll``` and ```tidy.x86.dll``` files must be located in the application directory.
 
 ## Limitations
-
-XslMail is a 32-bit assembly due to dependency on the 32-bit DLL (```libtidy.dll```).
 
 Output files will be encoded in UTF-8.
 

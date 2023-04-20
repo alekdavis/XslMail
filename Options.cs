@@ -9,6 +9,8 @@ using System.IO;
 using TidyManaged;
 
 using Plossum.CommandLine;
+using C5;
+using System.Diagnostics;
 
 namespace XslMail
 {
@@ -281,6 +283,17 @@ namespace XslMail
 			GroupId="options")]
 		public bool Verbose { get; set; }
 
+		[CommandLineOption(
+			Name="sub",
+			Aliases="substitutions",
+			Description="List of character and string substitutions" +
+				"that will be performed on the final HTML text. " +
+				"The default value is '©=&copy;|®=&reg;|™=&trade;'.",
+			MinOccurs=0, 
+			MaxOccurs=1, 
+			GroupId="options")]
+		public string Substitutions { get; set; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Options"/> class
 		/// and sets the command-line defaults.
@@ -309,30 +322,31 @@ namespace XslMail
 			SaveTempFiles			= false;
 			StopOnError				= true;
 			TempFolder				= "Temp";
-			TemplateFileExtension	= ".xml";
-			Verbose					= false;
-		}
+			TemplateFileExtension   = ".xml";
+            Verbose                 = false;
+            Substitutions			= "©=&copy;|®=&reg;|™=&trade;";
+        }
 
-		/// <summary>
-		/// Initializes the settings.
-		/// </summary>
-		/// <param name="args">
-		/// Command-line arguments.
-		/// </param>
-		/// <remarks>
-		/// <para>
-		/// This method checks if the program was invoked without 
-		/// command-line switches and, if so, sets the option
-		/// values using the application configuration file
-		/// (if the configuration file exists).
-		/// If the program was invoked with command-line switches,
-		/// the configuration file will be ignored.
-		/// </para>
-		/// <para>
-		/// This method also sets appropriate defaults and resolves
-		/// conflicting settings.
-		/// </para>
-		/// </remarks>
+        /// <summary>
+        /// Initializes the settings.
+        /// </summary>
+        /// <param name="args">
+        /// Command-line arguments.
+        /// </param>
+        /// <remarks>
+        /// <para>
+        /// This method checks if the program was invoked without 
+        /// command-line switches and, if so, sets the option
+        /// values using the application configuration file
+        /// (if the configuration file exists).
+        /// If the program was invoked with command-line switches,
+        /// the configuration file will be ignored.
+        /// </para>
+        /// <para>
+        /// This method also sets appropriate defaults and resolves
+        /// conflicting settings.
+        /// </para>
+        /// </remarks>
 		public void Initialize
 		(
 			string[] args
@@ -485,6 +499,11 @@ namespace XslMail
 					StringComparison.InvariantCultureIgnoreCase))
 				{
 					Verbose = bool.Parse(value.ToLower());								
+				}
+				else if (key.Equals("Substitutions",
+					StringComparison.InvariantCultureIgnoreCase))
+				{
+					Substitutions = value;
 				}
 			}
 		}

@@ -31,13 +31,13 @@
 </head>
 	
 <body>
-	<table summary="" class="brand-page-width">
+	<table class="brand-page-width">
 		<tr>
 			<!-- Left cell with message body. -->
 			<td class="brand-page-width">
 				
 				<!-- Message body. -->
-				<table summary="" class="brand-page-width">
+				<table class="brand-page-width">
 					<!-- Header. -->
 					<tr>
 						<td class="brand-whitespace-none brand-font-body-smaller-light brand-align-donotreply">
@@ -78,7 +78,7 @@
 					<!-- Footer. -->
 					<tr>
 						<td class="brand-whitespace-footer">
-							<table summary="" class="brand-page">
+							<table class="brand-page">
 								<tr>
 									<td class="brand-separator"><xsl:text disable-output-escaping="yes"><![CDATA[&nbsp;]]></xsl:text><!-- DO NOT REMOVE! --></td>
 								</tr>
