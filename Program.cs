@@ -9,8 +9,8 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using TidyManaged;
 using Plossum.CommandLine;
-using static System.Net.Mime.MediaTypeNames;
 using System.Linq;
+using System.Reflection;
 
 namespace XslMail
 {
@@ -52,6 +52,8 @@ namespace XslMail
 			string[] args
 		)
 		{
+            Console.OutputEncoding = Encoding.UTF8;
+
 			// Indicates program success or failure.
 			bool success = true;
 
@@ -143,6 +145,12 @@ namespace XslMail
 
 				return -1;
 			}
+
+            if (!_options.NoLogo)
+            {
+                Log(LogType.Log, GetAssemblyVersion());
+                Log(LogType.Log, GetAssemblyCopyright());
+            }
 
 			// Log application options, if needed.
 			if (_options.EchoSettings)
@@ -292,7 +300,6 @@ namespace XslMail
 				masterFileName, outputFileName);
 
 			int		step				= 0;
-			string	tempFilePath		= null;
 			string	tempFilePathFormat	= null;
 
 			// Generate name template for the temporary files 
@@ -409,6 +416,45 @@ namespace XslMail
 					ex);
 			}
 		}
+
+        /// <summary>
+        /// Gets the assembly copyright.
+        /// </summary>
+        /// <returns>
+        /// Assembly copyright info.
+        /// </returns>
+        public static string GetAssemblyCopyright()
+        {
+            Assembly assembly = 
+                Assembly.GetEntryAssembly() ?? 
+                Assembly.GetExecutingAssembly();
+
+            object[] attributes = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+        
+            if (attributes.Length > 0)
+            {
+                AssemblyCopyrightAttribute copyrightAttribute = 
+                    (AssemblyCopyrightAttribute)attributes[0];
+
+                return copyrightAttribute.Copyright;
+            }
+        
+            return null; // No copyright attribute found
+        }
+
+        /// <summary>
+        /// Gets the program version info.
+        /// </summary>
+        /// <returns>
+        /// Program version info.
+        /// </returns>
+        private static string GetAssemblyVersion()
+        {
+            return 
+                Assembly.GetExecutingAssembly().GetName().Name +
+                " v" +
+                Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
 
         /// <summary>
         /// Saves the temporary file.
@@ -809,49 +855,6 @@ namespace XslMail
 				return true;
 
 			return false;
-		}
-
-		/// <summary>
-		/// Builds and writes error logMessage to console.
-		/// </summary>
-		/// <param name="errMsg">
-		/// The error logMessage (or format string).
-		/// </param>
-		/// <param name="args">
-		/// Optional arguments.
-		/// </param>
-		private static void ShowError
-		(
-			string errMsg,
-			params object[] args
-		)
-		{
-			if (String.IsNullOrEmpty(errMsg))
-				return;
-
-			if (args != null)
-				errMsg = String.Format(errMsg, args);
-
-			Console.WriteLine(errMsg);
-		}
-
-		/// <summary>
-		/// Writes error messages from immediate and inner exceptions 
-		/// to the console window.
-		/// </summary>
-		/// <param name="ex">
-		/// Exception object.
-		/// </param>
-		private static void ShowError
-		(
-			Exception ex
-		)
-		{
-			while (ex != null)
-			{
-				Console.WriteLine(ex.Message);
-				ex = ex.InnerException;
-			}
 		}
 
 		/// <summary>

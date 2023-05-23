@@ -172,6 +172,14 @@ namespace XslMail
 		public bool NoInlineCss { get; set; }
 
 		[CommandLineOption(
+			Name="noLogo", 
+			Description="Do not display program version and copyright information.",
+			MinOccurs=0,
+			MaxOccurs=1, 
+			GroupId="options")]
+		public bool NoLogo { get; set; }
+
+		[CommandLineOption(
 			Name="noOutput", 
 			Description="Do not generate the output files. " +
 				"This setting overrides the /saveTempFiles switch. " +
@@ -313,6 +321,7 @@ namespace XslMail
 			MasterFileName			= "Master";
 			MasterFolder			= "";
 			NoInlineCss				= false;
+			NoLogo   				= false;
 			NoOutput				= false;
 			NoTidy					= false;
 			NoWarnings				= false;
@@ -410,7 +419,7 @@ namespace XslMail
 				{
 					KeepComments = bool.Parse(value.ToLower());				
 				}
-				else if (key.Equals("KeepStyleElelments", 
+				else if (key.Equals("KeepStyleElements", 
 					StringComparison.InvariantCultureIgnoreCase))
 				{
 					KeepStyleElements = bool.Parse(value.ToLower());				
@@ -444,6 +453,11 @@ namespace XslMail
 					StringComparison.InvariantCultureIgnoreCase))
 				{
 					NoInlineCss = bool.Parse(value.ToLower());				
+				}
+				else if (key.Equals("NoLogo", 
+					StringComparison.InvariantCultureIgnoreCase))
+				{
+					NoLogo = bool.Parse(value.ToLower());				
 				}
 				else if (key.Equals("NoOutput", 
 					StringComparison.InvariantCultureIgnoreCase))
