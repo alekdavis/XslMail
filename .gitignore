@@ -455,6 +455,5 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Local file for keeping secrets
-my-secrets.txt
-secrets.txt
+# Distributions Folder
+/DIST

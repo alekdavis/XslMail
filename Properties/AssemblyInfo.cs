@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("https://github.com/alekdavis/XslMail")]
 [assembly: AssemblyProduct("XslMail")]
-[assembly: AssemblyCopyright("(C) Alek Davis 2016-2023")]
+[assembly: AssemblyCopyright("(C) Alek Davis 2016-2025")]
 [assembly: AssemblyTrademark("Icon by Oxygen Team")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.1.0")]
-[assembly: AssemblyFileVersion("1.2.1.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]

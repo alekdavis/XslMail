@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: Xsl
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
@@ -56,17 +58,14 @@ namespace XslMail
 
 			// Indicates program success or failure.
 			bool success = true;
-
-			// Used to parse command line.
-			CommandLineParser parser = null;
-
-			try
-			{
+            try
+            {
 				// Parse command line.
-				_options = new Options(); 
-				parser = new CommandLineParser(_options);
+				_options = new Options();
+                // Used to parse command line.
+                CommandLineParser parser = new CommandLineParser(_options);
 
-				parser.Parse();
+                parser.Parse();
 
 				// If help switch (/h|/?|/help) is provided
 				if (_options.Help)
@@ -119,8 +118,7 @@ namespace XslMail
 					_options.ErrorFile + "'.");
 				Console.Error.WriteLine(GetErrorMessage(ex));
 
-				if (_logFile != null)
-					_logFile.Close();
+				_logFile?.Close();
 
 				return -1;
 			}
@@ -140,8 +138,7 @@ namespace XslMail
 					_options.LogFile + "'.");
 				Console.Error.WriteLine(GetErrorMessage(ex));
 
-				if (_errFile != null)
-					_errFile.Close();
+                _errFile?.Close();
 
 				return -1;
 			}
@@ -155,12 +152,13 @@ namespace XslMail
 			// Log application options, if needed.
 			if (_options.EchoSettings)
 			{
-				JsonSerializerSettings jsonConfig = 
-					new JsonSerializerSettings();
-				
-				jsonConfig.NullValueHandling = NullValueHandling.Include;
+                JsonSerializerSettings jsonConfig =
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Include
+                    };
 
-				Log(LogType.Log, JsonConvert.SerializeObject(
+                Log(LogType.Log, JsonConvert.SerializeObject(
 					_options, Newtonsoft.Json.Formatting.Indented, 
 					jsonConfig));
 			}
@@ -195,16 +193,37 @@ namespace XslMail
 				Log(LogType.Error, GetErrorMessage(ex));
 			}
 
-			return success ? 0 : -1;
+            if (_errFile != null)
+            {
+                try
+                {
+                    // Close error file and delete it if empty
+                    _errFile.Close();
+                    _errFile = null;
+
+                    if (!string.IsNullOrEmpty(_options.ErrorFile) &&
+                        File.Exists(_options.ErrorFile))
+                    {
+                        var fi = new FileInfo(_options.ErrorFile);
+                        if (fi.Length == 0)
+                            File.Delete(_options.ErrorFile);
+                    }
+                }
+                catch
+                {
+                    // Swallow exceptions to avoid affecting exit code
+                }
+            }
+            return success ? 0 : -1;
 		}
 
-		/// <summary>
-		/// Generates HTML email templates for all supported files 
-		/// in the specified folder.
-		/// </summary>
-		/// <param name="templateFolderPath">
-		/// Path to the template folder (can be absolute or relative).
-		/// </param>
+        /// <summary>
+        /// Generates HTML email templates for all supported files 
+        /// in the specified folder.
+        /// </summary>
+        /// <param name="templateFolderPath">
+        /// Path to the template folder (can be absolute or relative).
+        /// </param>
 		private static void ProcessFolder
 		(
 			string templateFolderPath
@@ -299,28 +318,27 @@ namespace XslMail
 				Path.GetFileName(templateFilePath), 
 				masterFileName, outputFileName);
 
-			int		step				= 0;
-			string	tempFilePathFormat	= null;
+			int step = 0;
 
-			// Generate name template for the temporary files 
-			// in case we need to save those. The name will include
-			// the number of the step producing the file appended
-			// before the extension.
-			tempFilePathFormat = Path.Combine(
-				_options.TempFolder,
-				templateId,
-				String.Format("{0}.{{0}}{1}", 
-					inputFileName, _options.OutputFileExtension));
+            // Generate name template for the temporary files 
+            // in case we need to save those. The name will include
+            // the number of the step producing the file appended
+            // before the extension.
+            string tempFilePathFormat = Path.Combine(
+                _options.TempFolder,
+                templateId,
+                string.Format("{0}.{{0}}{1}",
+                    inputFileName, _options.OutputFileExtension));
 
-			// This will be the final file.
-			string outputFilePath= Path.Combine(
+            // This will be the final file.
+            string outputFilePath= Path.Combine(
 				_options.OutputFolder, templateId, outputFileName);
 
-			// Email template text.
-			string html	= null;
+            // Email template text.
+            string html;
 
-			// STEP 1 (REQUIRED): Transform XSL.
-			try
+            // STEP 1 (REQUIRED): Transform XSL.
+            try
 			{
 				html = TransformXsl(masterFilePath, templateFilePath);
 			}
@@ -515,11 +533,13 @@ namespace XslMail
 			// Localized master template file.
 			XslCompiledTransform xslDoc = new XslCompiledTransform();
 			xslDoc.Load(masterFilePath);
-	
-			// Localized notification template file.
-			XmlDocument xmlDoc = new XmlDocument();
-			xmlDoc.PreserveWhitespace = true;
-			xmlDoc.Load(templateFilePath);
+
+            // Localized notification template file.
+            XmlDocument xmlDoc = new XmlDocument
+            {
+                PreserveWhitespace = true
+            };
+            xmlDoc.Load(templateFilePath);
 
 			// Use memory stream to generate the UTF-8 encoding 
 			// directive; otherwise, the transformation may result 
@@ -871,12 +891,14 @@ namespace XslMail
 			string path
 		)
 		{
-			StreamWriter file = new StreamWriter(
-				File.Open(path, FileMode.Create, FileAccess.Write, 
-					FileShare.Read));
-			file.AutoFlush = true;
+            StreamWriter file = new StreamWriter(
+                File.Open(path, FileMode.Create, FileAccess.Write,
+                    FileShare.Read))
+            {
+                AutoFlush = true
+            };
 
-			return file;
+            return file;
 		}
 
 		/// <summary>
@@ -948,10 +970,10 @@ namespace XslMail
 			if (message == null)
 				return;
 
-			string logMessage = null;
-		
-			// Format message if needed.
-			if (args != null && args.Length > 0)
+            string logMessage;
+
+            // Format message if needed.
+            if (args != null && args.Length > 0)
 				logMessage = String.Format(message, args);
 			else
 				logMessage = message;
